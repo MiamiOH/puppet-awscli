@@ -15,7 +15,7 @@ class awscli::params {
     }
     'RedHat': {
       case $::os['name'] {
-        'Amazon' {
+        'Amazon': {
           $pkg_dev = 'python27-devel'
           $pkg_pip = 'python-pip'
         }
