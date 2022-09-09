@@ -14,22 +14,26 @@ class awscli::params {
       $pkg_pip = 'python-pip'
     }
     'RedHat': {
-      if $::os['name'] == 'Amazon' {
-        $pkg_dev = 'python27-devel'
-      } else {
-        $pkg_dev = 'python-devel'
-      }
-
-      case $::os['release']['major'] {
-        '7': {
-          $pkg_pip = 'python2-pip'
-        }
-        '8': {
-          $pkg_dev = 'python3-devel'
-          $pkg_pip = 'python3-pip'
+      case $::os['name'] {
+        'Amazon' {
+          $pkg_dev = 'python27-devel'
+          $pkg_pip = 'python-pip'
         }
         default: {
-          $pkg_pip = 'python-pip'
+          case $::os['release']['major'] {
+            '7': {
+              $pkg_pip = 'python2-pip'
+              $pkg_dev = 'python-dev'
+            }
+            '8': {
+              $pkg_dev = 'python3-devel'
+              $pkg_pip = 'python3-pip'
+            }
+            default: {
+              $pkg_pip = 'python-pip'
+              $pkg_dev = 'python-dev'
+            }
+          }
         }
       }
     }
