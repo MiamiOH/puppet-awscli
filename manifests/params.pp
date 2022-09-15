@@ -26,7 +26,7 @@ class awscli::params {
               $pkg_dev = 'python-dev'
             }
             '8': {
-              $pkg_dev = 'python3-devel'
+              $pkg_dev = 'python36-devel'
               $pkg_pip = 'python3-pip'
             }
             default: {
