@@ -23,7 +23,7 @@ class awscli::params {
           case $::os['release']['major'] {
             '7': {
               $pkg_pip = 'python2-pip'
-              $pkg_dev = 'python-dev'
+              $pkg_dev = 'python-devel'
             }
             '8': {
               $pkg_dev = 'python36-devel'
@@ -31,7 +31,7 @@ class awscli::params {
             }
             default: {
               $pkg_pip = 'python-pip'
-              $pkg_dev = 'python-dev'
+              $pkg_dev = 'python-devel'
             }
           }
         }
