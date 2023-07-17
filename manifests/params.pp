@@ -10,14 +10,16 @@ class awscli::params {
 
   case $::os['family'] {
     'Debian': {
-      $pkg_dev = 'python-dev'
-      $pkg_pip = 'python-pip'
+      $pkg_dev      = 'python-dev'
+      $pkg_pip      = 'python-pip'
+      $pkg_provider = 'pip'
     }
     'RedHat': {
       case $::os['name'] {
         'Amazon': {
-          $pkg_dev = 'python27-devel'
-          $pkg_pip = 'python-pip'
+          $pkg_dev      = 'python27-devel'
+          $pkg_pip      = 'python-pip'
+          $pkg_provider = 'pip'
         }
         default: {
           case $::os['release']['major'] {
@@ -26,12 +28,15 @@ class awscli::params {
               $pkg_dev = 'python-devel'
             }
             '8': {
-              $pkg_dev = 'python36-devel'
-              $pkg_pip = 'python3-pip'
+              $pkg_dev      = 'python36-devel'
+              $pkg_pip      = 'python3-pip'
+              $pkg_provider = 'pip3'
             }
             default: {
-              $pkg_pip = 'python-pip'
-              $pkg_dev = 'python-devel'
+              $pkg_pip      = 'python-pip'
+              $pkg_dev      = 'python-devel'
+              $pkg_provider = 'pip'
+
             }
           }
         }

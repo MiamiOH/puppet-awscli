@@ -62,7 +62,7 @@ class awscli (
   $manage_epel      = true,
   $install_pkgdeps  = true,
   $install_pip      = true,
-  $provider         = 'pip',
+  $provider         = $awscli::params::pkg_provider,
   $proxy            = $awscli::params::proxy,
   $install_options  = $awscli::params::install_options,
 ) inherits awscli::params {
