@@ -21,6 +21,11 @@ class awscli::params {
           $pkg_pip      = 'python-pip'
           $pkg_provider = 'pip'
         }
+        'Rocky': {
+          $pkg_dev      = 'python3-devel'
+          $pkg_pip      = 'python3-pip'
+          $pkg_provider = 'pip'
+        }
         default: {
           case $::os['release']['major'] {
             '7': {
