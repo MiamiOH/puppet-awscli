@@ -47,8 +47,9 @@ class awscli::params {
       }
     }
     'Darwin': {
-      $pkg_dev = 'python'
-      $pkg_pip = 'brew-pip'
+      $pkg_dev      = 'python'
+      $pkg_pip      = 'brew-pip'
+      $pkg_provider = 'pip'
     }
     default:  { fail("The awscli module does not support ${facts['os']['family']}") }
   }

@@ -79,7 +79,7 @@ define awscli::profile (
   String $output = 'json',
 ) {
   if $aws_access_key_id == undef and $aws_secret_access_key == undef {
-    info ('AWS keys for awscli::profile. Your will need IAM roles configured.')
+    info('AWS keys for awscli::profile are not configured. IAM roles will be required.')
     $skip_credentials = true
   } else {
     $skip_credentials = false

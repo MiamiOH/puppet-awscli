@@ -3,13 +3,12 @@ fixtures:
   forge_modules:
     epel:
       repo: "puppet/epel"
-      ref: "3.0.1"
+      ref: "5.0.0"
     concat:
       repo: "puppetlabs/concat"
-      ref: "4.0.0"
-    stdlib: "puppetlabs/stdlib"
-    file_concat:
-      repo: "electrical/file_concat"
-      ref: "1.0.1"
+      ref: "9.1.0"
+    stdlib: 
+      repo: "puppetlabs/stdlib"
+      ref: "9.7.0"
   symlinks:
     awscli: "#{source_dir}"

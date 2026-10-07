@@ -10,15 +10,15 @@
   "dependencies": [
     {
       "name": "puppet/epel",
-      "version_requirement": ">= 3.0.0 <5.0.0"
+      "version_requirement": ">= 5.0.0 < 6.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.0.0 <7.0.0"
+      "version_requirement": ">= 8.6.0 < 10.0.0"
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">= 2.0.0 <7.0.0"
+      "version_requirement": ">= 8.0.1 < 10.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -86,10 +86,9 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 3.4.3 <= 6.99.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
-  "description": "Install awscli",
   "pdk-version": "3.5.1 (g7d6a7d3)",
   "template-url": "pdk-default#3.5.1",
   "template-ref": "tags/3.5.1-0-g9d5b193"
