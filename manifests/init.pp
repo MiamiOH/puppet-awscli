@@ -10,11 +10,11 @@
 #
 # @param pkg_dev
 #   Provides ability to install a specific development package by name.
-#   Default: See awscli::params.
+#   Default: Hiera value.
 #
 # @param pkg_pip
 #   Provides ability to install a specific PIP package by name.
-#   Default: See awscli::params.
+#   Default: Hiera value.
 #
 # @param manage_epel
 #   Boolean flag to install the EPEL repositories.
@@ -53,30 +53,44 @@
 # Copyright 2014 Justin Downing
 #
 class awscli (
-  String $version = 'present',
-  String $pkg_dev = $awscli::params::pkg_dev,
-  String $pkg_pip = $awscli::params::pkg_pip,
-  Boolean $manage_epel = true,
-  Boolean $install_pkgdeps = true,
-  Boolean $install_pip = true,
-  String $provider = $awscli::params::pkg_provider,
-  Optional[String] $proxy = $awscli::params::proxy,
-  Optional[Array[String]] $install_options = $awscli::params::install_options,
-) inherits awscli::params {
+  String $version,
+  String $pkg_dev,
+  String $pkg_pip,
+  Boolean $manage_epel,
+  Boolean $install_pkgdeps,
+  Boolean $install_pip,
+  String $provider,
+  Optional[String] $proxy = undef,
+  Optional[Array[String]] $install_options = undef,
+) {
   case $provider {
-    'pip','pip3': {
+    'pip', 'pip3': {
       class { 'awscli::deps':
-        proxy => $proxy,
+        pkg_dev         => $pkg_dev,
+        pkg_pip         => $pkg_pip,
+        install_pkgdeps => $install_pkgdeps,
+        install_pip     => $install_pip,
+        proxy           => $proxy,
+        manage_epel     => $manage_epel,
       }
 
-      package { 'awscli':
-        ensure          => $version,
-        provider        => $provider,
-        install_options => $install_options,
-        require         => [
-          Package[$pkg_pip],
-          Class['awscli::deps'],
-        ],
+      if $install_pip {
+        package { 'awscli':
+          ensure          => $version,
+          provider        => $provider,
+          install_options => $install_options,
+          require         => [
+            Package[$pkg_pip],
+            Class['awscli::deps'],
+          ],
+        }
+      } else {
+        package { 'awscli':
+          ensure          => $version,
+          provider        => $provider,
+          install_options => $install_options,
+          require         => Class['awscli::deps'],
+        }
       }
     }
 

@@ -1,22 +1,32 @@
 # == Class: awscli::deps::redhat
 #
-# This module manages awscli dependencies for redhat $::os['family'].
+# This module manages awscli dependencies for RedHat $facts['os']['family'].
 #
+# @param pkg_dev
+#   Development package required by the selected Python installation.
+# @param pkg_pip
+#   Pip package required by the selected Python installation.
+# @param install_pkgdeps
+#   Whether package development dependencies should be installed.
+# @param install_pip
+#   Whether pip should be installed.
 # @param proxy
 #   Proxy used when configuring the EPEL repository.
-#   Default: awscli::params::proxy
+#   Default: undef
 #
 # @param manage_epel
 #   Whether the EPEL repository should be managed.
-#   Default: awscli::manage_epel
+#   Default: true
 #
 class awscli::deps::redhat (
-  Optional[String] $proxy = $awscli::params::proxy,
-  Boolean $manage_epel = $awscli::manage_epel,
-) inherits awscli::params {
-  # Check if we manage epel repositories
+  String $pkg_dev,
+  String $pkg_pip,
+  Boolean $install_pkgdeps,
+  Boolean $install_pip,
+  Optional[String] $proxy = undef,
+  Boolean $manage_epel = true,
+) {
   if $manage_epel {
-    # Check if we have a proxy to setup with EPEL
     if $proxy != undef {
       class { 'epel':
         epel_proxy => $proxy,
@@ -28,14 +38,20 @@ class awscli::deps::redhat (
 
     Package { require => Class['epel'] }
   }
-  if $awscli::install_pkgdeps {
-    if ! defined(Package[$awscli::pkg_dev]) {
-      package { $awscli::pkg_dev: ensure => installed }
+
+  if $install_pkgdeps {
+    if !defined(Package[$pkg_dev]) {
+      package { $pkg_dev:
+        ensure => installed,
+      }
     }
   }
-  if $awscli::install_pip {
-    if ! defined(Package[$awscli::pkg_pip]) {
-      package { $awscli::pkg_pip: ensure => installed }
+
+  if $install_pip {
+    if !defined(Package[$pkg_pip]) {
+      package { $pkg_pip:
+        ensure => installed,
+      }
     }
   }
 }

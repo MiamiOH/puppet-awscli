@@ -1,0 +1,4 @@
+---
+awscli::pkg_dev: python-devel
+awscli::pkg_pip: python2-pip
+awscli::provider: pip

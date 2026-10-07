@@ -3,54 +3,38 @@
 # This class manages awscli parameters depending on the platform and
 # should *not* be called directly.
 #
+# == Class: awscli::params
+#
+# This class provides backwards-compatible parameter defaults using Hiera.
+#
+# Values are expected to be defined in Hiera as:
+#
+#   awscli::pkg_dev
+#   awscli::pkg_pip
+#   awscli::provider
+#   awscli::proxy
+#   awscli::install_options
+#
 class awscli::params {
-  $proxy = undef
-  $install_options = undef
+  $proxy = lookup('awscli::proxy', {
+      'default_value' => undef,
+      'value_type'    => Optional[String],
+  })
 
-  case $facts['os']['family'] {
-    'Debian': {
-      $pkg_dev      = 'python-dev'
-      $pkg_pip      = 'python-pip'
-      $pkg_provider = 'pip'
-    }
-    'RedHat': {
-      case $facts['os']['name'] {
-        'Amazon': {
-          $pkg_dev      = 'python27-devel'
-          $pkg_pip      = 'python-pip'
-          $pkg_provider = 'pip'
-        }
-        'Rocky': {
-          $pkg_dev      = 'python36-devel'
-          $pkg_pip      = 'python3-pip'
-          $pkg_provider = 'dnf'
-        }
-        default: {
-          case $facts['os']['release']['major'] {
-            '7': {
-              $pkg_pip      = 'python2-pip'
-              $pkg_dev      = 'python-devel'
-              $pkg_provider = 'pip'
-            }
-            '8': {
-              $pkg_dev      = 'python36-devel'
-              $pkg_pip      = 'python3-pip'
-              $pkg_provider = 'pip3'
-            }
-            default: {
-              $pkg_pip      = 'python-pip'
-              $pkg_dev      = 'python-devel'
-              $pkg_provider = 'pip'
-            }
-          }
-        }
-      }
-    }
-    'Darwin': {
-      $pkg_dev      = 'python'
-      $pkg_pip      = 'brew-pip'
-      $pkg_provider = 'pip'
-    }
-    default:  { fail("The awscli module does not support ${facts['os']['family']}") }
-  }
+  $install_options = lookup('awscli::install_options', {
+      'default_value' => undef,
+      'value_type'    => Optional[Array[String]],
+  })
+
+  $pkg_dev = lookup('awscli::pkg_dev', {
+      'value_type' => String,
+  })
+
+  $pkg_pip = lookup('awscli::pkg_pip', {
+      'value_type' => String,
+  })
+
+  $pkg_provider = lookup('awscli::provider', {
+      'value_type' => String,
+  })
 }

@@ -1,0 +1,10 @@
+---
+awscli::version: present
+awscli::manage_epel: true
+awscli::install_pkgdeps: true
+awscli::install_pip: true
+awscli::pkg_dev: python-dev
+awscli::pkg_pip: python-pip
+awscli::provider: pip
+awscli::proxy: ~
+awscli::install_options: ~

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 Puppet::Type.type(:package).provide(
   :homebrew,
-  parent: Puppet::Type.type(:package).provider(:generic)
+  parent: Puppet::Type.type(:package).provider(:generic),
 ) do
 end
 
@@ -82,6 +82,49 @@ describe 'awscli', type: :class do
     it do
       is_expected.to contain_package('python2-pip').with(
         ensure: 'installed',
+      )
+    end
+  end
+
+  context 'on RedHat 8' do
+    let(:facts) do
+      {
+        os: {
+          family: 'RedHat',
+          name: 'CentOS',
+          release: {
+            major: '8',
+          },
+        },
+      }
+    end
+
+    let(:params) do
+      {
+        manage_epel: false,
+        install_pkgdeps: true,
+        install_pip: true,
+      }
+    end
+
+    it { is_expected.to compile }
+
+    it do
+      is_expected.to contain_package('python36-devel').with(
+        ensure: 'installed',
+      )
+    end
+
+    it do
+      is_expected.to contain_package('python3-pip').with(
+        ensure: 'installed',
+      )
+    end
+
+    it do
+      is_expected.to contain_package('awscli').with(
+        ensure: 'present',
+        provider: 'pip3',
       )
     end
   end

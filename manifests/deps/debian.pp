@@ -2,16 +2,33 @@
 #
 # This module manages awscli dependencies for Debian $::os['family'].
 #
-class awscli::deps::debian {
-  if $awscli::install_pkgdeps {
-    if ! defined(Package[$awscli::pkg_dev]) {
-      package { $awscli::pkg_dev: ensure => installed }
+# @param pkg_dev
+#   Development package required by the selected Python installation.
+# @param pkg_pip
+#   Pip package required by the selected Python installation.
+# @param install_pkgdeps
+#   Whether package development dependencies should be installed.
+# @param install_pip
+#   Whether pip should be installed.
+class awscli::deps::debian (
+  String $pkg_dev,
+  String $pkg_pip,
+  Boolean $install_pkgdeps,
+  Boolean $install_pip,
+) {
+  if $install_pkgdeps {
+    if !defined(Package[$pkg_dev]) {
+      package { $pkg_dev:
+        ensure => installed,
+      }
     }
   }
 
-  if $awscli::install_pip {
-    if ! defined(Package[$awscli::pkg_pip]) {
-      package { $awscli::pkg_pip: ensure => installed }
+  if $install_pip {
+    if !defined(Package[$pkg_pip]) {
+      package { $pkg_pip:
+        ensure => installed,
+      }
     }
   }
 }
