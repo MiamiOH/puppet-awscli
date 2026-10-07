@@ -9,7 +9,7 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-class {'awscli':
+class { 'awscli':
   pkg_dev => 'python',
-  pkg_pip => 'brew-pip'
+  pkg_pip => 'brew-pip',
 }

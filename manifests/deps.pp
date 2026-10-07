@@ -13,7 +13,7 @@
 class awscli::deps (
   $proxy = $awscli::params::proxy,
 ) inherits awscli::params {
-  case $::os['family'] {
+  case $facts['os']['family'] {
     'Debian': {
       contain awscli::deps::debian
     }
@@ -26,6 +26,6 @@ class awscli::deps (
     'Darwin': {
       contain awscli::deps::osx
     }
-    default:  { fail("The awscli module does not support ${::osfamily}") }
+    default:  { fail("The awscli module does not support ${facts['os']['family']}") }
   }
 }

@@ -66,10 +66,9 @@ class awscli (
   $proxy            = $awscli::params::proxy,
   $install_options  = $awscli::params::install_options,
 ) inherits awscli::params {
-
   case $provider {
     'pip','pip3': {
-      class { '::awscli::deps':
+      class { 'awscli::deps':
         proxy => $proxy,
       }
 
