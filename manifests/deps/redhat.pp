@@ -2,9 +2,17 @@
 #
 # This module manages awscli dependencies for redhat $::os['family'].
 #
+# @param proxy
+#   Proxy used when configuring the EPEL repository.
+#   Default: awscli::params::proxy
+#
+# @param manage_epel
+#   Whether the EPEL repository should be managed.
+#   Default: awscli::manage_epel
+#
 class awscli::deps::redhat (
-  $proxy        = $awscli::params::proxy,
-  $manage_epel  = $awscli::manage_epel,
+  Optional[String] $proxy = $awscli::params::proxy,
+  Boolean $manage_epel = $awscli::manage_epel,
 ) inherits awscli::params {
   # Check if we manage epel repositories
   if $manage_epel {

@@ -4,44 +4,41 @@
 #
 # === Parameters
 #
-#  [$version]
-#    Provides ability to change the version of awscli being installed.
-#    Default: 'present'
-#    This variable is required.
+# @param version
+#   Provides ability to change the version of awscli being installed.
+#   Default: 'present'
 #
-#  [$pkg_dev]
-#    Provides ability to install a specific Dev package by name.
-#    Default: See awscli::params Class
-#    This variable is optional.
+# @param pkg_dev
+#   Provides ability to install a specific development package by name.
+#   Default: See awscli::params.
 #
-#  [$pkg_pip]
-#    Provides ability to install a specific PIP package by name.
-#    Default: See awscli::params Class
-#    This variable is optional.
+# @param pkg_pip
+#   Provides ability to install a specific PIP package by name.
+#   Default: See awscli::params.
 #
-#  [$manage_epel]
-#    Boolean flag to install the EPEL repositories.
-#    Default: true
-#    This variable is optional.
+# @param manage_epel
+#   Boolean flag to install the EPEL repositories.
+#   Default: true
 #
-#  [$install_pkgdeps]
-#    Boolean flag to install the package dependencies or not
-#    Default: true
+# @param install_pkgdeps
+#   Boolean flag to install package dependencies.
+#   Default: true
 #
-#  [$install_pip]
-#    Boolean flag to install pip or not
-#    Default: true
+# @param install_pip
+#   Boolean flag to install pip.
+#   Default: true
 #
-#  [$provider]
-#    One of "pip" or "apt"
+# @param provider
+#   Package provider to use. Typically 'pip', 'pip3', or the system package
+#   provider.
 #
-#  [$proxy]
-#    String proxy variable for use with EPEL module
-#    Default: undef
+# @param proxy
+#   Proxy used when configuring the EPEL repository.
+#   Default: undef
 #
-#  [$install_options]
-#    Array of install options for the awscli Pip package
-#    Default: undef
+# @param install_options
+#   Array of install options for the awscli PIP package.
+#   Default: undef
 #
 # === Examples
 #
@@ -56,15 +53,15 @@
 # Copyright 2014 Justin Downing
 #
 class awscli (
-  $version          = 'present',
-  $pkg_dev          = $awscli::params::pkg_dev,
-  $pkg_pip          = $awscli::params::pkg_pip,
-  $manage_epel      = true,
-  $install_pkgdeps  = true,
-  $install_pip      = true,
-  $provider         = $awscli::params::pkg_provider,
-  $proxy            = $awscli::params::proxy,
-  $install_options  = $awscli::params::install_options,
+  String $version = 'present',
+  String $pkg_dev = $awscli::params::pkg_dev,
+  String $pkg_pip = $awscli::params::pkg_pip,
+  Boolean $manage_epel = true,
+  Boolean $install_pkgdeps = true,
+  Boolean $install_pip = true,
+  String $provider = $awscli::params::pkg_provider,
+  Optional[String] $proxy = $awscli::params::proxy,
+  Optional[Array[String]] $install_options = $awscli::params::install_options,
 ) inherits awscli::params {
   case $provider {
     'pip','pip3': {

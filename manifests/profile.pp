@@ -2,49 +2,52 @@
 #
 # Configures an aws-cli profile
 #
-# === Variables
+# === Parameters
 #
-# [$ensure]
-#   Control whether the profile should be present or not
+# @param ensure
+#   Control whether the profile should be present or not.
 #   Default: present
 #
-# [$user]
-#   The user for whom the profile will be installed
+# @param user
+#   The user for whom the profile will be installed.
+#   Default: root
 #
-# [$group]
-#   The group for whom the profile will be installed
+# @param group
+#   The group for whom the profile will be installed.
+#   Default: undef
 #
-# [$homedir]
-#   The home directory where the config and credentials will be placed
+# @param homedir
+#   The home directory where the config and credentials will be placed.
+#   Default: determined from the user and operating system.
 #
-# [$aws_access_key_id]
-#   The aws_access_key_id for this profile. If not specified, aws-cli can
-#   can use IAM roles to authenticate.
+# @param aws_access_key_id
+#   The AWS access key ID for this profile. If not specified, aws-cli can
+#   use IAM roles to authenticate.
 #
-# [$aws_secret_access_key]
-#   The aws_secret_access_key for this profile. If not specified, aws-cli can
-#   can use IAM roles to authenticate.
+# @param aws_secret_access_key
+#   The AWS secret access key for this profile. If not specified, aws-cli can
+#   use IAM roles to authenticate.
 #
-# [$role_arn]
+# @param role_arn
 #   The ARN for the role to use in this profile. The source_profile must
-#   be supplied when role_arn is specified
+#   be supplied when role_arn is specified.
 #
-# [$source_profile]
-#   The profile to use for credentials to assume the specified role
+# @param source_profile
+#   The profile to use for credentials to assume the specified role.
 #
-# [$role_session_name]
-#   An identifier for the assumed role session
+# @param role_session_name
+#   An identifier for the assumed role session.
 #
-# [$aws_region]
-#   The aws_region for this profile
+# @param aws_region
+#   The AWS region for this profile.
 #   Default: us-east-1
 #
-# [$profile_name]
-#   The name of the AWS profile
+# @param profile_name
+#   The name of the AWS profile.
 #   Default: default
 #
-# [$output]
-#   The output format used for this profile
+# @param output
+#   The output format used for this profile.
 #   Default: json
 #
 # === Example
@@ -62,18 +65,18 @@
 # }
 #
 define awscli::profile (
-  $ensure                = 'present',
-  $user                  = 'root',
-  $group                 = undef,
-  $homedir               = undef,
-  $aws_access_key_id     = undef,
-  $aws_secret_access_key = undef,
-  $role_arn              = undef,
-  $source_profile        = undef,
-  $role_session_name     = undef,
-  $aws_region            = 'us-east-1',
-  $profile_name          = 'default',
-  $output                = 'json',
+  String $ensure = 'present',
+  String $user = 'root',
+  Optional[String] $group = undef,
+  Optional[String] $homedir = undef,
+  Optional[String] $aws_access_key_id = undef,
+  Optional[String] $aws_secret_access_key = undef,
+  Optional[String] $role_arn = undef,
+  Optional[String] $source_profile = undef,
+  Optional[String] $role_session_name = undef,
+  String $aws_region = 'us-east-1',
+  String $profile_name = 'default',
+  String $output = 'json',
 ) {
   if $aws_access_key_id == undef and $aws_secret_access_key == undef {
     info ('AWS keys for awscli::profile. Your will need IAM roles configured.')

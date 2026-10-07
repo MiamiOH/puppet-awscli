@@ -2,6 +2,10 @@
 #
 # This module manages awscli dependencies and should *not* be called directly.
 #
+# @param proxy
+#   Proxy used when configuring dependencies.
+#   Default: undef
+#
 # === Authors
 #
 # Justin Downing <justin@downing.us>
@@ -11,7 +15,7 @@
 # Copyright 2014 Justin Downing
 #
 class awscli::deps (
-  $proxy = $awscli::params::proxy,
+  Optional[String] $proxy = $awscli::params::proxy,
 ) inherits awscli::params {
   case $facts['os']['family'] {
     'Debian': {
