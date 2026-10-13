@@ -1,0 +1,4 @@
+---
+awscli::pkg_dev: python
+awscli::pkg_pip: brew-pip
+awscli::provider: pip

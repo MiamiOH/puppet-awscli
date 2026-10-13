@@ -2,15 +2,35 @@
 #
 # This module manages awscli dependencies for Darwin $::os['family'].
 #
-class awscli::deps::osx {
-  if $awscli::install_pkgdeps {
-    if ! defined(Package[ $awscli::pkg_dev ]) {
-      package { $awscli::pkg_dev: ensure => installed, provider => homebrew }
+# @param pkg_dev
+#   Development package required by the selected Python installation.
+# @param pkg_pip
+#   Pip package required by the selected Python installation.
+# @param install_pkgdeps
+#   Whether package development dependencies should be installed.
+# @param install_pip
+#   Whether pip should be installed.
+class awscli::deps::osx (
+  String $pkg_dev,
+  String $pkg_pip,
+  Boolean $install_pkgdeps,
+  Boolean $install_pip,
+) {
+  if $install_pkgdeps {
+    if !defined(Package[$pkg_dev]) {
+      package { $pkg_dev:
+        ensure   => installed,
+        provider => homebrew,
+      }
     }
   }
-  if $awscli::install_pip {
-    if ! defined(Package[ $awscli::pkg_pip ]) {
-      package { $awscli::pkg_pip: ensure => installed, provider => homebrew }
+
+  if $install_pip {
+    if !defined(Package[$pkg_pip]) {
+      package { $pkg_pip:
+        ensure   => installed,
+        provider => homebrew,
+      }
     }
   }
 }

@@ -1,0 +1,4 @@
+---
+awscli::pkg_dev: python36-devel
+awscli::pkg_pip: python3-pip
+awscli::provider: pip3
